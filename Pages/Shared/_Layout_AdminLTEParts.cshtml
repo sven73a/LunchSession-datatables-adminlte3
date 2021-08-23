@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @*<title>@ViewData["Title"] - Contoso University</title>*@
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="~/lib/plugins/fontawesome-free/css/all.min.css">
+    @await RenderSectionAsync("HeadCss", false)
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/lib/admin-lte/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <partial name="_LayoutMainNavbarTop" />
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <partial name="_LayoutLeftSidebarMain" />
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-8">
+                            @*<h1 class="m-0 text-dark">@ViewData["Title"]</h1>*@
+                        </div><!-- /.col -->
+                        <div class="col-sm-4">
+                            <!-- BREADCRUMP -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+            <!-- /.content -->
+        </div>
+
+
+        <!-- Main Footer -->
+        <partial name="_LayoutMainFooter" />
+    </div>
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="~/lib/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/lib/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- AdminLTE App -->
+    <script src="~/lib/admin-lte/js/adminlte.min.js"></script>
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+﻿@page
+@model ContosoUniversity.Pages.Courses.IndexDTModel
+
+@{
+    ViewData["Title"] = "Courses";
+}
+@section HeadCss
+{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/datatables.net-searchpanes-bs4/searchPanes.bootstrap4.css" />
+    <link rel="stylesheet" href="~/lib/plugins/datatables-select/css/select.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/plugins/datatables-buttons/css/buttons.bootstrap4.css" />
+}
+<h1>Courses</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table" id="table1">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Courses[0].CourseID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Courses[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Courses[0].Credits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Courses[0].Department)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Courses)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Credits)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department.Name)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.CourseID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.CourseID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.CourseID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <!-- page script DataTables -->
+    <script>
+        $(function () {
+            var tableSp = $("#table1").DataTable({
+                //stateSave: true,
+                //stateDuration: 60 * 60 * 12,
+                order: [[0, "asc"]],
+                pageLength: 10,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Alles"]],
+                responsive: true,
+                autoWidth: false,
+                colReorder: true,
+                language: {
+                    url: '/lib/datatables-plugins/i18n/nl_NL.json'
+                },
+                dom: "<'row'<'col-md-12'B>><'row'<'col-md-12'P>><'row'<'col-md-6'l><'col-md-6'f>><'row'<'col-md-12't>><'row'<'col-md-6'i><'col-md-6'p>>",
+                buttons: [
+                    {
+                        text: 'Filteren',
+                        className: 'mb-3',
+                        attr: {
+                            title: 'filter',
+                            id: 'btnFilter'
+                        },
+                        action: function (e, dt, node, config) {
+                            tableSp.searchPanes.container().toggle();
+                            if ($("#btnFilter").text() === 'Filteren') {
+                                $("#btnFilter").text('Verbergen');
+                            } else {
+                                $("#btnFilter").text('Filteren');
+                            }
+                        }
+                    },
+                    { extend: 'copy', className: 'ml-3 mb-3' },
+                    { extend: 'csv', className: 'ml-3 mb-3' }
+                ],
+                columnDefs: [
+                    { orderable: false, targets: [] },
+                    {
+                        searchPanes: {
+                            show: true
+                        },
+                        targets: [1, 3]
+                    },
+                ],
+                searchPanes: {
+                    controls: true,
+                    columns: [1, 3],
+                    cascadePanes: false,
+                    layout: 'columns-2'
+                },
+                initComplete: function (settings, json) {
+                    tableSp.searchPanes.container().prependTo(tableSp.table().container());
+                    tableSp.searchPanes.container().hide();
+                }
+            });
+        });
+    </script>
+    <!-- DataTables -->
+    <script src="~/lib/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib//plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib//plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib//plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables.net-searchpanes/dataTables.searchPanes.min.js"></script>
+    <script src="~/lib/datatables.net-searchpanes-bs4/searchPanes.bootstrap4.js"></script>
+    <script src="~/lib//plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib//plugins/datatables-buttons/js/buttons.bootstrap4.js"></script>
+    <script src="~/lib//plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib//plugins/datatables-select/js/dataTables.select.min.js"></script>
+}
